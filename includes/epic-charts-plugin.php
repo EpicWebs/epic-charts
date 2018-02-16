@@ -67,8 +67,8 @@ class Epic_Charts {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'epic_charts_VERSION' ) ) {
+			$this->version = epic_charts_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}

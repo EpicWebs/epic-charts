@@ -126,8 +126,18 @@ class Epic_Charts_Public {
 							ticks: {
 								beginAtZero:true
 							}
-						}]
-					},
+						}],
+					},";
+					
+				if($graphData['graphType'] == "radar") {
+					$view .= "scale: {
+							ticks: {
+								beginAtZero:true
+							}
+						},";
+				}
+					
+				$view .= "
 					legend: {
 						display: true,
 						position: 'bottom',

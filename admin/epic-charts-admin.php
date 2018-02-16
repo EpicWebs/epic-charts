@@ -52,11 +52,12 @@ class Epic_Charts_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->cpt = 'epic_chart';
+		
 		add_action( 'init', array( $this, 'epic_charts_custom_post_types' ), 0 );
 		add_action( 'add_meta_boxes', array( $this, 'epic_charts_custom_metabox' ) );
 		add_action( 'save_post', array( $this, 'save_epic_charts_metabox_data' ) );
 		add_action( 'manage_epic_chart_posts_custom_column' , array( $this, 'epic_chart_custom_columns' ), 10, 2 );
-		add_filter('manage_epic_chart_posts_columns' , array( $this, 'epic_charts_add_shortcode_columns' ) );
+		add_filter( 'manage_epic_chart_posts_columns' , array( $this, 'epic_charts_add_shortcode_columns' ) );
 
 	}
 
