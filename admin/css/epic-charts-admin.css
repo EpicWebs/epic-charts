@@ -1,0 +1,53 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+.chart-data-table {
+	border-collapse: collapse;
+	margin-top: .5em;
+	width: 100%;
+	clear: both;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+.chart-data-table td {
+	padding-top: 0px;
+	padding-left: 0px;
+}
+
+.epic-chart-data {
+	border-bottom: solid 1px #cccccc;
+}
+
+.epic-chart-data .actions {
+	overflow: hidden;
+	width: 100%;
+	padding: 20px 0 0 0;
+}
+
+.epic-chart-data .actions .button-primary {
+}
+
+#epic_chart_box .wp-picker-holder {
+	position: absolute;
+}
+
+.epic-charts-shortcode-preview {
+	padding-top: 20px;
+	width: 100%;
+	min-width: 463px;
+	float: left;
+}
+
+.epic-charts-shortcode-preview input {
+	font-size: 20px;
+	padding: 5px;
+}
+
+.epic-charts-shortcode-preview p {
+	font-style: italic;
+	font-size: 12px;
+	color: #3d3d3d;
+	margin-top: 2px;
+	padding-left: 2px;
+}
