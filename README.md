@@ -7,3 +7,17 @@ A simple chart plugin for WordPress using ChartJS.org - Allows you to create cha
 - Add a dataset for example "Mass of Planet"
 - Add a data row for exmaple "Mars"
 - Publish the chart and copy the shortcode into your post/page content.
+
+#  Installation
+
+How To Install
+
+1. Upload 'chart-plugin' folder to the '/wp-content/plugins/' directory.
+1. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Place '[chart id="1"]' in your content area.
+
+# Frequently Asked Questions
+
+Where can I see the available charts?
+
+http://www.chartjs.org/samples/latest/
