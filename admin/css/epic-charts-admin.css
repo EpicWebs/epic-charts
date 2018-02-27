@@ -2,6 +2,21 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+#sortableDataTables {
+    background-color: #ffffff;
+}
+#sortableDataTables .dashicons-move {
+    margin-right: 10px;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    cursor: move;
+}
+#sortableDataTables .dashicons-move:before {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+}
 .chart-data-table {
 	border-collapse: collapse;
 	margin-top: .5em;
@@ -17,6 +32,7 @@
 
 .epic-chart-data {
 	border-bottom: solid 1px #cccccc;
+    position: relative;
 }
 
 .epic-chart-data .actions {

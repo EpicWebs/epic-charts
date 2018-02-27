@@ -118,6 +118,7 @@ class Epic_Charts_Admin {
 			if( is_object( $screen ) && $this->cpt == $screen->post_type ){
 
 				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/epic-charts-admin.js', array( 'jquery','wp-color-picker' ), $this->version, false );
+				wp_enqueue_script( 'jquery-ui-draggable', array( 'jquery', 'jquery-ui-mouse', 'jquery-ui-widget', 'jquery-ui-droppable' ), $this->version, false );
 
 			}
 		}
@@ -217,7 +218,7 @@ class Epic_Charts_Admin {
 							</th>
 						</tr>
 						<tr>
-							<td colspan="2" style="padding:0;">
+							<td colspan="2" style="padding:0;" id="sortableDataTables">
 								<?php
 								if(!empty($chart_data)) {
 									$i = 1;
@@ -228,6 +229,7 @@ class Epic_Charts_Admin {
 								<table class="form-table epic-chart-data">
 									<tr>
 										<th scope="row">
+                                            <span class="dashicons-before dashicons-move"></span>
 											<label>Dataset Label</label>
 										</th>
 										<td>

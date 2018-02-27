@@ -27,8 +27,8 @@ class Epic_Charts_Public {
 
 	}
 	
-	public function generate_chart_view($chartId) {
-		$chart_data = preg_replace_callback ( '!s:(\d+):"(.*?)";!', function($match) {      
+	public function generate_chart_view($chartId) {        
+		$chart_data = preg_replace_callback ( '!s:(\d+):"(.*?)";!', function($match) {  
 			return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
 		}, get_post_meta( $chartId, '_epic_chart_datasets', true ));
 	
@@ -45,142 +45,27 @@ class Epic_Charts_Public {
 			
 			$labelsArray = array();
 			$datasetHtml = "";
-			
-			// CHART DATASETS
-			foreach($graphData['datasets'] as $key => $dataset) {
-				$dataSetId = 1;
-				
-				foreach($dataset as $key => $set) {				
-					if($dataSetId == 1) {	
-						foreach($set['data'] as $data) {
-							array_push($labelsArray, html_entity_decode($data['label']));
-						}
-					}
-					
-					$set['label'] = str_replace("&#39;", "\'", $set['label']);
-					
-					$datasetHtml .= "{
-						label: '" . html_entity_decode($set['label']) . "',
-						data: [" . $this->returnGraphData($set['data']) . "],
-						";
-						
-						switch($graphData['graphType']) {
-							case "line":
-								$datasetHtml .= "pointBackgroundColor: [" . $this->returnGraphBackgroundColours($set['data']) . "],";
-								break;
-							default;
-								$datasetHtml .= "backgroundColor: [" . $this->returnGraphBackgroundColours($set['data']) . "],";
-								break;
-						}
-					
-					// Additional dataset properties
-					$datasetHtml .= "
-						borderWidth: 2, 
-						pointRadius: 5,
-					";
-					
-					if($graphData['graphType'] == "line") {
-						$datasetHtml .= "
-							borderColor: '{$set['line_color']}',
-						";
-					}
-					
-					$datasetHtml .= "},";
-				
-					$dataSetId++;
-				}
-			}
-			
-			// START OF CHART
-			$view .= "
-			<script>
-			var ctx = document.getElementById('graph-{$chartId}').getContext('2d');
-			var myChart = new Chart(ctx, {
-				type: '{$graphData['graphType']}',
-				data: {
-					labels: [" . $this->returnGraphLabels($labelsArray) . "],
-					datasets: [{$datasetHtml}],
-					";
-				
-			// CHART TYPE OPTIONS
-			if($graphData['graphType'] == "line") {
-				$view .= "fill: false,
-				";
-			}
-				
-			// END OF CHART
-				$view .= "
-				},
-				options: {
-					title: {
-						display: true,
-						text: '" . html_entity_decode(get_the_title($chartId)) . "',
-					},
-					scales: {
-						yAxes: [{
-							ticks: {
-								beginAtZero:true
-							}
-						}],
-						xAxes: [{
-							ticks: {
-								beginAtZero:true
-							}
-						}],
-					},";
-					
-				if($graphData['graphType'] == "radar") {
-					$view .= "scale: {
-							ticks: {
-								beginAtZero:true
-							}
-						},";
-				}
-					
-				$view .= "
-					legend: {
-						display: true,
-						position: 'bottom',
-					},
-				}
-			});
-			</script>";
+            
+            switch($graphData['graphType']) {
+                case "radar":
+                // DEFAULT CHART DATASETS
+                    include 'partials/epic-charts-radar.php';
+                    break;
+                case "line":
+                // DEFAULT CHART DATASETS
+                    include 'partials/epic-charts-line.php';
+                    break;
+                default:
+                // DEFAULT CHART DATASETS
+                    include 'partials/epic-charts-default.php';
+                    break;
+            }
 		
 		} else {
 			$view = "";
 		}
 		
 		return $view;
-	}
-	
-	private function returnGraphLabels($labelData) {
-		$labels = array();
-		
-		foreach($labelData as $value) {
-			array_push($labels, "'" . $value . "'");
-		}
-		
-		return implode(",", $labels);
-	}
-	
-	public function returnGraphData($dataSets) {
-		$data = array();
-		
-		foreach($dataSets as $key => $value) {
-			array_push($data, "'" . $value['value'] . "'");
-		}
-		
-		return implode(",", $data);		
-	}
-	
-	public function returnGraphBackgroundColours($dataSets) {
-		$backgroundColor 	= array();
-		
-		foreach($dataSets as $key => $value) {
-			array_push($backgroundColor, "'" . $value['background_color'] . "'");
-		}
-		
-		return implode(",", $backgroundColor);		
 	}
 	
 	public static function epic_charts_shortcode( $atts, $content = "" ) {
@@ -190,9 +75,7 @@ class Epic_Charts_Public {
 		
 		return $this->generate_chart_view($atts['chartid']);
 	}
-
-	private function nice_looking_code($string) {
-		echo highlight_string("<?php\n\$data =\n" . var_export($string, true) . ";\n?>");
-	}
 	
 }
+
+require_once 'partials/utilities.php';

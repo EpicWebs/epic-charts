@@ -1,6 +1,42 @@
 (function( $ ) {
 	$(function() {
 		$('.color-field').wpColorPicker({'color':'rgb'});
+        $("#sortableDataTables").sortable({
+            handle: ".dashicons-move",
+            containment: "parent",
+            stop: function( event, ui ) {
+                var firstChartData = jQuery(".epic-chart-data").first();
+                
+                jQuery(".epic-chart-data").not(firstChartData).each(function(index) {
+                    var rowIndex = index;
+                    
+                    jQuery(this).find(".datasetLabel").each(function() {
+                        var value = jQuery(this).val();
+                        jQuery(this).after("<label class='rowLabel'>" + value + "</label>");
+                        jQuery(this).remove();
+                    });
+                });
+                
+                firstChartData.find(".rowLabel").each(function(index) {
+                    var value = jQuery(this).html();
+                    var dataSetIndex = index + 1;
+                    
+                    jQuery(this).after('<input class="datasetLabel" name="chartdata[datasets][set1][data][' + dataSetIndex  + '][label]" placeholder="Label..." value="' + value + '" type="text">');
+                    jQuery(this).remove();
+                });
+                
+                $(".epic-chart-data").each(function(index) {
+                    var chartId = index + 1;
+				    var chartTableHtml = $(this).prop('outerHTML');
+                    
+				    chartTableHtml 	= chartTableHtml.replace(/set\d/g, "set" + chartId);
+                    $(this).after(chartTableHtml);
+                    $(this).remove();
+                });
+				
+				$('.color-field').wpColorPicker({'color':'rgb'});
+            },
+        });
 	});
 	
 	$(function() {
